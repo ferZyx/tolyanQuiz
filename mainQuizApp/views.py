@@ -51,7 +51,7 @@ def test_view(request):
         make_single_html_file(f"{base_dir}/mainQuizApp/temp/{request.user.username}.zip", base_dir,
                               request.user.username)
 
-        with open(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}\\index.html', 'r') as html:
+        with open(f'{base_dir}/mainQuizApp/temp/{request.user.username}/index.html', 'r') as html:
             html = html.read().replace('\n            ', ' ')
             bs_object = BS(html, 'html.parser')
             p_list = bs_object.find_all('p')
