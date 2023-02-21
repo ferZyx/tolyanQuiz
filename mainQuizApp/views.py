@@ -47,7 +47,7 @@ def test_view(request):
         else:
             is_random = False
 
-        export_as_html_zip(file_id, f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.zip')
+        export_as_html_zip(file_id, f'{base_dir}/mainQuizApp/temp/{request.user.username}.zip')
         make_single_html_file(f"{base_dir}/mainQuizApp/temp/{request.user.username}.zip", base_dir,
                               request.user.username)
 
