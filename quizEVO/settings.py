@@ -74,10 +74,10 @@ WSGI_APPLICATION = 'quizEVO.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'geniusdb',
-        'USER': 'username',
-        'PASSWORD': 'sQSUWFwLZTisz1A4Hn8YFPiW1hCFWkum',
-        'HOST': 'dpg-cfq9u9qrrk08lt52bj20-a.frankfurt-postgres.render.com',
+        'NAME': 'neondb',
+        'USER': 'ferZyx',
+        'PASSWORD': '12UjchDWQEyY',
+        'HOST': 'ep-hidden-leaf-969855.eu-central-1.aws.neon.tech',
         'PORT': '5432',
     }
 }
