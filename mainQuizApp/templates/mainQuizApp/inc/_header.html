@@ -1,0 +1,44 @@
+{% load static %}
+{% load custom_tags %}
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a class="navbar-brand" href="/">
+        <img src="{% static 'firstApp/img/favicon.png'%}" alt="" width="30" height="30"
+             class="d-inline-block align-text-top">
+        Genius
+    </a>
+
+    {% show_nav_menu %}
+
+    {% if request.user.is_authenticated %}
+    <div class="flex-shrink-0 dropdown">
+        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle" id="dropdownUser2"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="{{ request.user.profile.image.url }}" alt="user_logo" width="32" height="32"
+                 class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2" style="">
+            <li><a class="dropdown-item" href="#">Профиль</a>
+            <li><a class="dropdown-item" href="#">Настройки</a></li>
+            {% if request.user.is_authenticated and request.user.is_superuser %}
+            <li>
+                <a class="dropdown-item" href="/admin"><font color="red"> Admin
+                    panel</font></a>
+            </li>
+            {% endif %}
+            <li>
+                <button type="button" class="dropdown-item" id="interesting_factsBtn">Нажми</button>
+            </li>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Выйти</a></li>
+        </ul>
+    </div>
+    {% else %}
+    <div class="col-md-3 text-end">
+        <button type="button" class="btn btn-outline-primary me-2">Login</button>
+        <button type="button" class="btn btn-primary">Sign-up</button>
+    </div>
+    {% endif %}
+
+</header>

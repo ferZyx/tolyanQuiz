@@ -1,0 +1,14 @@
+{% extends 'mainQuizApp/base.html' %}
+
+{% block content %}
+
+{% for questions in questions_list %}
+
+{% for question in questions %}
+{{ question|safe }}
+{% endfor %}
+
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,40 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.urls import reverse
+
+
+class UploadedFile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    file_id = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('test', kwargs={"file_id": self.file_id})
+
+    class Meta:
+        ordering = ['-uploaded_at']
+        verbose_name = 'Загруженный файл'
+        verbose_name_plural = 'Загруженные файлы'
+
+
+class Tests(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    file = models.ForeignKey(UploadedFile, on_delete=models.CASCADE)
+    started_at = models.DateTimeField(auto_now_add=True)
+    is_finished = models.BooleanField(default=False)
+    finished_at = models.DateTimeField(blank=True, null=True)
+    test = models.TextField()
+    question_count = models.IntegerField()
+    result = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.user) + ' | ' + self.file.name
+
+    class Meta:
+        ordering = ['started_at']
+        verbose_name = 'Лог тестов'
+        verbose_name_plural = 'Логи тестов'
