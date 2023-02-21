@@ -151,10 +151,10 @@ def export_as_html_zip(real_file_id, filepath):
 
 def make_single_html_file(zip_path, base_dir, username):
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(f'{base_dir}\\mainQuizApp\\temp\\{username}')
+        zip_ref.extractall(f'{base_dir}/mainQuizApp/temp/{username}')
     os.remove(zip_path)
-    html_file = f'{base_dir}\\mainQuizApp\\temp\\{username}\\index.html'
-    img_folder = f'{base_dir}\\mainQuizApp\\temp\\{username}\\images'
+    html_file = f'{base_dir}/mainQuizApp/temp/{username}/index.html'
+    img_folder = f'{base_dir}/mainQuizApp/temp/{username}//images'
     with open(html_file, "r") as f:
         html_content = f.read()
 
@@ -164,6 +164,6 @@ def make_single_html_file(zip_path, base_dir, username):
         img_b64 = base64.b64encode(img_content).decode()
         html_content = html_content.replace(f'src="images/{filename}"',
                                             f"src='data:image/{filename.split('.')[-1]};base64,{img_b64}'")
-    shutil.rmtree(f'{base_dir}\\mainQuizApp\\temp\\{username}\\images')
+    shutil.rmtree(f'{base_dir}/mainQuizApp/temp/{username}/images')
     with open(html_file, "w") as f:
         f.write(html_content)
