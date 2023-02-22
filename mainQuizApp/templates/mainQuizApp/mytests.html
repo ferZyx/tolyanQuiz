@@ -1,0 +1,82 @@
+{% extends 'mainQuizApp/base.html' %}
+
+{% load myapp_tags %}
+
+
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+
+
+<div class="p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-6 fw-bold">Начатые тесты</h1>
+    {% if started_tests %}
+    <div class="list-group">
+        {% for test in started_tests %}
+        <a href="{% url 'test-view' test.pk %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ test.file__name }}</h5>
+                <small class="text-muted">{{ test.started_at|time_since }}</small>
+            </div>
+            <p class="mb-1">Вопросов: {{ test.question_count }}</p>
+            <small class="text-muted">And some muted small print.</small>
+        </a>
+        {% endfor%}
+
+
+    </div>
+
+    {% else %}
+    У вас нет начатых тестов
+    {% endif %}
+
+
+</div>
+<div class="p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-6 fw-bold">Доступные тесты</h1>
+    {% if files %}
+    <div class="list-group">
+        {% for file in files %}
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ file.name }}</h5>
+                <small class="text-muted">small tag</small>
+            </div>
+            <p class="mb-1">another tag</p>
+            <small class="text-muted">and another</small>
+        </a>
+        {% endfor%}
+
+
+    </div>
+
+    {% else %}
+    У вас нет доступных тестов тестов
+    {% endif %}
+    Добавить тест КНОПКА
+
+</div>
+<div class="p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-6 fw-bold">Завершенные тесты тесты</h1>
+    {% if finished_tests %}
+    <div class="list-group">
+        {% for test in finished_tests %}
+        <a href="{% url 'test-view' test.pk %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{ test.file__name }}</h5>
+                <small class="text-muted">{{ test.finished_at }}</small>
+            </div>
+            <p class="mb-1">Вопросов: {{ test.question_count }}</p>
+            <small class="text-muted">And some muted small print.</small>
+        </a>
+        {% endfor%}
+
+
+    </div>
+
+    {% else %}
+    У вас нет завершенных тестов
+    {% endif %}
+
+
+</div>
+{% endblock %}

@@ -16,27 +16,33 @@ def main_page(request):
     return render(request, 'mainQuizApp/index.html')
 
 
-def files_view(request):
-    if request.method == 'POST':
-        file = request.FILES['file']
-        content = file.read()
-        with open(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx', 'wb') as f:
-            f.write(content)
-        file_id = upload_with_conversion(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx')
-        if file_id:
-            messages.success(request, 'Congratulations by brother! Uploaded successful!!!')
-            new_file = UploadedFile(user=request.user, file_id=file_id, name=file.name)
-            new_file.save()
-            os.remove(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx')
-            return redirect('tests')
-        else:
-            messages.error(request, 'Something was wrong. Talk with admin about it! Dont be shy, poops :3')
-    files = UploadedFile.objects.filter(user=request.user)
-    tests = Tests.objects.filter(user=request.user)
-    context_data = {'files': files,
-                    'tests': tests,
-                    'title':' Мои тесты'}
-    return render(request, 'mainQuizApp/tests.html', context=context_data)
+def mytests_view(request):
+    # if request.method == 'POST':
+    #     file = request.FILES['file']
+    #     content = file.read()
+    #     with open(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx', 'wb') as f:
+    #         f.write(content)
+    #     file_id = upload_with_conversion(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx')
+    #     if file_id:
+    #         messages.success(request, 'Congratulations by brother! Uploaded successful!!!')
+    #         new_file = UploadedFile(user=request.user, file_id=file_id, name=file.name)
+    #         new_file.save()
+    #         os.remove(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx')
+    #         return redirect('tests')
+    #     else:
+    #         messages.error(request, 'Something was wrong. Talk with admin about it! Dont be shy, poops :3')
+    # files = UploadedFile.objects.filter(user=request.user)
+    started_tests = Tests.objects.filter(user=request.user, is_finished=False).values('file__name', 'question_count',
+                                                                                      'started_at', 'pk')
+    finished_tests = Tests.objects.filter(user=request.user, is_finished=True).values('file__name', 'question_count',
+                                                                                      'finished_at', 'pk')
+    files = UploadedFile.objects.filter(user=request.user).values('name', 'file_id')
+    context_data = {'title': ' Мои тесты',
+                    'started_tests': started_tests,
+                    'finished_tests': finished_tests,
+                    'files': files,
+                    }
+    return render(request, 'mainQuizApp/mytests.html', context=context_data)
 
 
 def test_view(request):

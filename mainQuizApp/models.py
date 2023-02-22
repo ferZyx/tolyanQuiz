@@ -34,6 +34,13 @@ class Tests(models.Model):
     def __str__(self):
         return str(self.user) + ' | ' + self.file.name
 
+    @property
+    def get_test_name(self):
+        return self.file.name if self.file else 'Какие то траблы с названием теста брат('
+
+    def get_test_url(self):
+        return reverse('test-view', args=[str(self.pk)])
+
     class Meta:
         ordering = ['started_at']
         verbose_name = 'Лог тестов'
