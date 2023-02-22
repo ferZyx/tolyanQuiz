@@ -32,8 +32,10 @@ def files_view(request):
         else:
             messages.error(request, 'Something was wrong. Talk with admin about it! Dont be shy, poops :3')
     files = UploadedFile.objects.filter(user=request.user)
-
-    context_data = {'files': files}
+    tests = Tests.objects.filter(user=request.user)
+    context_data = {'files': files,
+                    'tests': tests,
+                    'title':' Мои тесты'}
     return render(request, 'mainQuizApp/tests.html', context=context_data)
 
 

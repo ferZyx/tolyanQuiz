@@ -1,5 +1,5 @@
 {% extends 'mainQuizApp/base.html' %}
-
+{% block title %}{{title}}{% endblock %}
 {% block content %}
 <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
@@ -32,7 +32,8 @@
         <input type="number" class="form-control" id="lowerDiapason" value="0" name="lower_diapason">
 
         <label for="upperDiapason" class="form-label">upperDiapason</label>
-        <input type="number" class="form-control" id="upperDiapason" value="100{{ question_count }}" name="upper_diapason">
+        <input type="number" class="form-control" id="upperDiapason" value="100{{ question_count }}"
+               name="upper_diapason">
 
         <input class="form-check-input" type="checkbox" value="" id="randomCheck" name="is_random">
         <label class="form-check-label" for="randomCheck">
@@ -42,6 +43,39 @@
         </button>
 
     </form>
+
+</div>
+<div class="p-5 mb-4 bg-light rounded-3">
+    <h1 class="display-6 fw-bold">Начатые тесты</h1>
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">List group item heading</h5>
+                <small>3 days ago</small>
+            </div>
+            <p class="mb-1">Some placeholder content in a paragraph.</p>
+            <small>And some small print.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">List group item heading</h5>
+                <small class="text-muted">3 days ago</small>
+            </div>
+            <p class="mb-1">Some placeholder content in a paragraph.</p>
+            <small class="text-muted">And some muted small print.</small>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">List group item heading</h5>
+                <small class="text-muted">3 days ago</small>
+            </div>
+            <p class="mb-1">Some placeholder content in a paragraph.</p>
+            <small class="text-muted">And some muted small print.</small>
+        </a>
+    </div>
+    {% for test in tests %}
+    {{ test }}
+    {% endfor%}
 
 </div>
 
