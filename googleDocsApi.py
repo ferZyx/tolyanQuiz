@@ -149,6 +149,37 @@ def export_as_html_zip(real_file_id, filepath):
     return file.getvalue()
 
 
+def get_questions_count(real_file_id):
+    """Download a Document file in HTML(ZIP) format.
+    Args:
+        real_file_id : file ID of any workspace document format file
+    Returns : IO object with location
+
+    Load pre-authorized user credentials from the environment.
+    TODO(developer) - See https://developers.google.com/identity
+    for guides on implementing OAuth2 for the application.
+    """
+
+    try:
+        file_id = real_file_id
+
+        # pylint: disable=maybe-no-member
+        request = drive_service.files().export_media(fileId=file_id,
+                                                     mimeType='text/plain')
+        file = io.BytesIO()
+        downloader = MediaIoBaseDownload(file, request)
+        done = False
+        while done is False:
+            status, done = downloader.next_chunk()
+
+    except HttpError as error:
+        print(F'An error occurred: {error}')
+        file = None
+
+    file_text = str(file.getvalue())
+    return file_text.count('<question>')
+
+
 def make_single_html_file(zip_path, base_dir, username):
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
         zip_ref.extractall(f'{base_dir}/mainQuizApp/temp/{username}')
@@ -167,3 +198,8 @@ def make_single_html_file(zip_path, base_dir, username):
     shutil.rmtree(f'{base_dir}/mainQuizApp/temp/{username}/images')
     with open(html_file, "w") as f:
         f.write(html_content)
+
+
+if __name__ == '__main__':
+    doc_id = '1x_AXkWo0H6fcgA-aBpZ2k7ya7bSe4dXNsNotsOfjFGg'
+    print(get_questions_count(doc_id))

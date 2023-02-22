@@ -12,7 +12,8 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('register/', user_register, name='register'),
     path('mytests/', login_required(mytests_view), name='mytests'),
-    path('test_config/', login_required(test_view), name='test'),
+    path('upload_docx/', login_required(upload_docx), name='upload_docx'),
+    path('test-config/<file_pk>', login_required(test_config), name='test-config'),
     path('test-view/<test_id>', login_required(testing_page), name='test-view'),
 
 ]

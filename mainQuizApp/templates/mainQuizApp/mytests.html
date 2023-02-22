@@ -6,42 +6,36 @@
 {% block title %}{{title}}{% endblock %}
 {% block content %}
 
-
+{% if started_tests %}
 <div class="p-5 mb-4 bg-light rounded-3">
     <h1 class="display-6 fw-bold">Начатые тесты</h1>
-    {% if started_tests %}
+
     <div class="list-group">
         {% for test in started_tests %}
         <a href="{% url 'test-view' test.pk %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ test.file__name }}</h5>
-                <small class="text-muted">{{ test.started_at|time_since }}</small>
+                <small class="text-muted">Начат {{ test.started_at|time_since }} назад.</small>
             </div>
             <p class="mb-1">Вопросов: {{ test.question_count }}</p>
             <small class="text-muted">And some muted small print.</small>
         </a>
         {% endfor%}
-
-
     </div>
-
-    {% else %}
-    У вас нет начатых тестов
-    {% endif %}
-
-
 </div>
+{% endif %}
+
 <div class="p-5 mb-4 bg-light rounded-3">
     <h1 class="display-6 fw-bold">Доступные тесты</h1>
     {% if files %}
     <div class="list-group">
         {% for file in files %}
-        <a href="#" class="list-group-item list-group-item-action">
+        <a href="{% url 'test-config' file.pk %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ file.name }}</h5>
-                <small class="text-muted">small tag</small>
+                <small class="text-muted">File uploaded: {{ file.uploaded_at }}</small>
             </div>
-            <p class="mb-1">another tag</p>
+            <p class="mb-1">Обнаружено {{ file.questions_count}} вопросов.</p>
             <small class="text-muted">and another</small>
         </a>
         {% endfor%}
@@ -52,12 +46,20 @@
     {% else %}
     У вас нет доступных тестов тестов
     {% endif %}
-    Добавить тест КНОПКА
+    <form action="{% url 'upload_docx' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="inputGroupFile01" name="file"
+                   accept=".doc,.docx">
+        </div>
+        <button class="btn btn-primary btn-lg" type="submit">Upload</button>
+    </form>
 
 </div>
+
+{% if finished_tests %}
 <div class="p-5 mb-4 bg-light rounded-3">
     <h1 class="display-6 fw-bold">Завершенные тесты тесты</h1>
-    {% if finished_tests %}
     <div class="list-group">
         {% for test in finished_tests %}
         <a href="{% url 'test-view' test.pk %}" class="list-group-item list-group-item-action">
@@ -73,10 +75,7 @@
 
     </div>
 
-    {% else %}
-    У вас нет завершенных тестов
-    {% endif %}
-
-
 </div>
+{% endif %}
+
 {% endblock %}

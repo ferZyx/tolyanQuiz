@@ -1,0 +1,32 @@
+{% extends 'mainQuizApp/base.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Настройка тестирования</h1>
+        <p class="col-md-8 fs-4">Вы хотите начать тестирование по документу: {{ file.name }}.</p>
+        <p class="col-md-8 fs-4">Данный тест имеет {{ file.questions_count }} вопросов. </p>
+        <p class="col-md-8 fs-4">Необходимо выбрать диапазон вопросов которые вы хотите прорешать. </p>
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="lowerDiapason" class="form-label">lowerDiapason</label>
+            <input type="number" class="form-control" id="lowerDiapason" value="0" name="lower_diapason">
+
+            <label for="upperDiapason" class="form-label">upperDiapason</label>
+            <input type="number" class="form-control" id="upperDiapason" value="{{ file.questions_count }}"
+                   name="upper_diapason">
+
+            <input class="form-check-input" type="checkbox" value="" id="randomCheck" name="is_random">
+            <label class="form-check-label" for="randomCheck">
+                Randomize questions
+            </label> <br>
+            <button class="btn btn-primary btn-lg" type="submit">Start
+            </button>
+
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
