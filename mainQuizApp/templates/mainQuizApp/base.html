@@ -24,6 +24,7 @@
                 {% if request.user.is_authenticated and request.user.is_superuser %}
                 <a href="/admin" class="btn btn-danger me-2">Admin panel</a>
                 {% endif %}
+                <small>Вы вошли как: {{ request.user.username }}</small>
                 <a href="{% url 'logout' %}" class="btn btn-outline-light me-2">Logout</a>
                 <a href="{% url 'mytests' %}" class="btn btn-warning">My tests</a>
 

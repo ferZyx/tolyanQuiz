@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from .models import UploadedFile, Tests
 from googleDocsApi import upload_with_conversion, export_as_html_zip, make_single_html_file, get_questions_count
 from django.conf import settings
@@ -211,9 +211,14 @@ def user_register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            new_user = form.save()
             messages.success(request, 'Вы успешно зарегистрированы!')
-            return redirect('login')
+            new_user = authenticate(username=form.cleaned_data['username'],
+                                    password=form.cleaned_data['password1'],
+                                    )
+            login(request, new_user)
+            return redirect('home')
+
         else:
             messages.error(request, 'Ошибка регистрации, перепроверьте данные!')
     else:

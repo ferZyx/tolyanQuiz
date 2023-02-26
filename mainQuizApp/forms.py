@@ -6,20 +6,18 @@ from .models import UploadedFile
 
 
 class UserLoginForm(AuthenticationForm):
-    username = forms.CharField(label='Введите логин',
-                               widget=forms.TextInput(
-                                   attrs={'placeholder': 'Tolyan', 'class': 'form-control', 'type': 'text'}))
+    username = forms.CharField(label='Введите email',
+                               widget=forms.TextInput(attrs={'placeholder': 'Email', 'class': 'form-control', 'type':'email'}))
     password = forms.CharField(label='Введите пароль',
                                widget=forms.PasswordInput(attrs={'placeholder': 'Пароль', 'class': 'form-control'}))
 
 
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(label='Введите email', widget=forms.EmailInput(attrs={'placeholder': 'qwerty@email.com'}))
-    username = forms.CharField(label='Введите логин', widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
+    username = forms.CharField(label='Введите email', widget=forms.TextInput(attrs={'placeholder': 'qwerty@email.com', 'type':'email'}))
     password1 = forms.CharField(label='Введите пароль', widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
     password2 = forms.CharField(label='Повторите пароль',
                                 widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
 
     class Meta:
         model = User
-        fields = ['email', 'username', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2']
