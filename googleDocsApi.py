@@ -188,16 +188,16 @@ def make_single_html_file(zip_path, base_dir, username):
     img_folder = f'{base_dir}/mainQuizApp/temp/{username}//images'
     with open(html_file, "r") as f:
         html_content = f.read()
-
-    for filename in os.listdir(img_folder):
-        with open(os.path.join(img_folder, filename), "rb") as f:
-            img_content = f.read()
-        img_b64 = base64.b64encode(img_content).decode()
-        html_content = html_content.replace(f'src="images/{filename}"',
-                                            f"src='data:image/{filename.split('.')[-1]};base64,{img_b64}'")
-    shutil.rmtree(f'{base_dir}/mainQuizApp/temp/{username}/images')
-    with open(html_file, "w") as f:
-        f.write(html_content)
+    if os.path.isdir(img_folder):
+        for filename in os.listdir(img_folder):
+            with open(os.path.join(img_folder, filename), "rb") as f:
+                img_content = f.read()
+            img_b64 = base64.b64encode(img_content).decode()
+            html_content = html_content.replace(f'src="images/{filename}"',
+                                                f"src='data:image/{filename.split('.')[-1]};base64,{img_b64}'")
+        shutil.rmtree(f'{base_dir}/mainQuizApp/temp/{username}/images')
+        with open(html_file, "w") as f:
+            f.write(html_content)
 
 
 if __name__ == '__main__':

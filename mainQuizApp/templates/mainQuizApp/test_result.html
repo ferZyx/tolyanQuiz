@@ -1,0 +1,42 @@
+{% extends 'mainQuizApp/base.html' %}
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<script>
+  const quizData = [
+  {% for question_dict in test_array %}
+  {
+    question:`{{ question_dict.question|safe}}`,
+    a: `{{ question_dict.answer1|safe }}`,
+    b: `{{ question_dict.answer2|safe }}`,
+    c: `{{ question_dict.answer3|safe }}`,
+    d: `{{ question_dict.answer4|safe }}`,
+    e: `{{ question_dict.answer5|safe }}`,
+    correct: '{{ question_dict.correct_answer }}',
+  },
+  {% endfor %}
+  ];
+</script>
+{% if test_array %}
+
+{% for question_dict in test_array %}
+<ul class="list-group">
+  <li class="list-group-item list-group-item-action">{{ question_dict.question|safe }}</li>
+  <li class="list-group-item list-group-item-action">{{ question_dict.answer1|safe }}</li>
+  <li class="list-group-item list-group-item-action">{{ question_dict.answer2|safe }}</li>
+  <li class="list-group-item list-group-item-action">{{ question_dict.answer3|safe }}</li>
+  <li class="list-group-item list-group-item-action">{{ question_dict.answer4|safe }}</li>
+  <li class="list-group-item list-group-item-action">{{ question_dict.answer5|safe }}</li>
+</ul>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endfor %}
+{% else %}
+There is some problem, u have u tell about it to the developer. :(
+{% endif %}
+{% endblock %}

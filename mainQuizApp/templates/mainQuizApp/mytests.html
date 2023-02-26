@@ -12,7 +12,7 @@
 
     <div class="list-group">
         {% for test in started_tests %}
-        <a href="{% url 'test-view' test.pk %}" class="list-group-item list-group-item-action">
+        <a href="{% url 'test_view' test.pk %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ test.file__name }}</h5>
                 <small class="text-muted">Начат {{ test.started_at|time_since }} назад.</small>
@@ -26,11 +26,11 @@
 {% endif %}
 
 <div class="p-5 mb-4 bg-light rounded-3">
-    <h1 class="display-6 fw-bold">Доступные тесты</h1>
+    <h1 class="display-6 fw-bold">Ранее загруженные документы</h1>
     {% if files %}
     <div class="list-group">
         {% for file in files %}
-        <a href="{% url 'test-config' file.pk %}" class="list-group-item list-group-item-action">
+        <a href="{% url 'test_config' file.pk %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ file.name }}</h5>
                 <small class="text-muted">File uploaded: {{ file.uploaded_at }}</small>
@@ -44,7 +44,7 @@
     </div>
 
     {% else %}
-    У вас нет доступных тестов тестов
+    У вас нет ранее загруженных документов. Загрузите их!
     {% endif %}
     <form action="{% url 'upload_docx' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -59,16 +59,26 @@
 
 {% if finished_tests %}
 <div class="p-5 mb-4 bg-light rounded-3">
-    <h1 class="display-6 fw-bold">Завершенные тесты тесты</h1>
+    <h1 class="display-6 fw-bold">Завершенные тесты</h1>
     <div class="list-group">
         {% for test in finished_tests %}
-        <a href="{% url 'test-view' test.pk %}" class="list-group-item list-group-item-action">
+        <a href="{% url 'test_result_view' test.pk %}" class="list-group-item list-group-item-action">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{ test.file__name }}</h5>
-                <small class="text-muted">{{ test.finished_at }}</small>
+                <small class="text-muted">Завершено: {{ test.finished_at }}</small>
             </div>
+
             <p class="mb-1">Вопросов: {{ test.question_count }}</p>
-            <small class="text-muted">And some muted small print.</small>
+            <small class="text-muted">Вы ответили на {{ test.result }}/{{ test.question_count }}. Это:
+                <span id="percentage"></span>/100%
+                <script>
+    const result = {{ test.result }};
+    const questionCount = {{ test.question_count }};
+    const percentage = (result / questionCount) * 100;
+    document.getElementById('percentage').innerText = percentage.toFixed(1);
+
+                </script>
+            </small>
         </a>
         {% endfor%}
 

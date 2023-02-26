@@ -28,7 +28,7 @@ class Tests(models.Model):
     started_at = models.DateTimeField(auto_now_add=True)
     is_finished = models.BooleanField(default=False)
     finished_at = models.DateTimeField(blank=True, null=True)
-    test = models.TextField()
+    test_array = models.JSONField(default=list, blank=True)
     question_count = models.IntegerField()
     result = models.IntegerField(blank=True, null=True)
 
