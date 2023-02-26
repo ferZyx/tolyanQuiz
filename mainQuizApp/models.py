@@ -29,6 +29,7 @@ class Tests(models.Model):
     is_finished = models.BooleanField(default=False)
     finished_at = models.DateTimeField(blank=True, null=True)
     test_array = models.JSONField(default=list, blank=True)
+    user_answers_array = models.JSONField(default=list, blank=True)
     question_count = models.IntegerField()
     result = models.IntegerField(blank=True, null=True)
 

@@ -41,8 +41,9 @@ def mytests_view(request):
     # files = UploadedFile.objects.filter(user=request.user)
     started_tests = Tests.objects.filter(user=request.user, is_finished=False).values('file__name', 'question_count',
                                                                                       'started_at', 'pk')
-    finished_tests = Tests.objects.filter(user=request.user, is_finished=True).order_by('-finished_at').values('file__name', 'question_count',
-                                                                                      'finished_at', 'pk', 'result')
+    finished_tests = Tests.objects.filter(user=request.user, is_finished=True).order_by('-finished_at').values(
+        'file__name', 'question_count',
+        'finished_at', 'pk', 'result')
     files = UploadedFile.objects.filter(user=request.user).values('name', 'file_id', 'uploaded_at', 'questions_count',
                                                                   'pk')
     context_data = {'title': ' Мои тесты',
@@ -144,7 +145,7 @@ def test_config_view(request, file_pk):
                          question_count=len(question_dict_list))
         new_test.save()
 
-        cache_key = f"user_data_{request.user.id}|{new_test.pk}"
+        cache_key = f"user_new_test_{request.user.id}|{new_test.pk}"
         cache.set(cache_key, new_test, 300)
 
         return redirect('test_view', new_test.pk)
@@ -158,12 +159,11 @@ def test_config_view(request, file_pk):
 
 
 def testing_view(request, test_pk):
-    cache_key = f"user_data_{request.user.id}|{test_pk}"
+    cache_key = f"user_new_test_{request.user.id}|{test_pk}"
 
     test = cache.get(cache_key)
     if not test:
         test = Tests.objects.get(pk=test_pk)
-        print('no test')
     if test.user != request.user:
         return redirect('mytests')
     if test.is_finished:
@@ -191,20 +191,35 @@ def finish_test(request):
         result = 0
 
         for i in range(len(question_dict_list)):
+            question_dict_list[i]['user_answer'] = answers.get(str(i))
             if answers.get(str(i)) == question_dict_list[i]['correct_answer']:
                 result += 1
 
         test.result = result
         test.is_finished = True
         test.finished_at = timezone.now()
+        test.test_array = question_dict_list
 
         test.save()
+
+        cache_key = f"user_finished_test_{request.user.id}|{test_pk}"
+        cache.set(cache_key, test, 300)
+
         return JsonResponse({'redirect': reverse('test_result_view', args=[test_pk])})
 
 
 def test_result_view(request, test_pk):
-    print(test_pk)
-    return render(request, 'mainQuizApp/test_result.html')
+    cache_key = f"user_finished_test_{request.user.id}|{test_pk}"
+
+    test = cache.get(cache_key)
+    if not test:
+        test = Tests.objects.get(pk=test_pk)
+
+    context = {
+        'test_array': test.test_array
+    }
+
+    return render(request, 'mainQuizApp/test_result.html', context)
 
 
 def user_register(request):
