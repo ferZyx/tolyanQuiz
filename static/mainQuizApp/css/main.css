@@ -1,0 +1,384 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+
+.good_btn {
+    background-color: #47c2ff;
+    border: none;
+    display: block;
+    max-width: 300px;
+    max-height: 50px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000000;
+    padding: 15px 30px;
+    transition: all 0.1s ease;
+    border-radius: 7px;
+}
+
+.areusure-btn {
+    padding: 15px 30px;
+    font-size: 14px;
+    margin-top: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 7px;
+}
+
+.areusure-yes {
+    background-color: #47c2ff;
+}
+
+.areusure-no {
+    background-color: #b3b3b3;
+}
+
+.areusure-no:hover {
+    background-color: #7e7e7e;
+}
+
+button:hover {
+    background-color: #438faa;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+    background-color: #5ec6eb;
+}
+
+
+.quiz-wrapper {
+    margin: 0;
+    background: url('../images/bg.jpg');
+    background-repeat: repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    max-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+h2 {
+    padding: 16px;
+    text-align: center;
+    margin: 0;
+}
+
+
+
+.question-numlist {
+    min-height: 50px;
+    padding: 10px 0px 60px 0px;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    gap: 2px;
+    align-items: center;
+    margin: 0px 20px;
+}
+
+.question-numitem {
+    text-align: center;
+    background-color: #b3b3b3;
+    border-radius: 7px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+}
+
+.question-num {
+    width: 100%;
+    height: 100%;
+    padding: 7px 10px;
+}
+
+
+
+.finished {
+    background-color: #1eda72;
+}
+
+.current {
+    background-color: #3bbeee;
+}
+
+/* .question-num {
+
+} */
+
+.choosing-option {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    z-index: 10;
+}
+
+.arrow {
+    width: 40px;
+    padding: 5px;
+    border: 1px solid #b3b3b3;
+    cursor: pointer;
+}
+
+.arrow img {
+    width: 100%;
+}
+
+#select-answer {
+    height: 100%;
+}
+
+.quiz-box {
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+    max-height: 80vh;
+    width: 80vw;
+    position: relative;
+}
+
+#submit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.quiz-counter {
+    position: absolute;
+    top: 2%;
+    right: 3%;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.quiz-header {
+    padding: 50px;
+    max-height: 80vh;
+    overflow-y: scroll;
+    position: relative;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    font-size: 20px;
+    margin: 15px 0;
+    border: 1px solid #dddddd;
+    border-radius: 7px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+ul li:hover {
+    box-shadow: 0px 1px 0px #b3b3b3;
+}
+
+
+ul li label {
+    cursor: pointer;
+}
+
+
+
+
+
+p {
+    display: inline;
+}
+
+.leave-page {
+    position: absolute;
+    width: 200px;
+    height: 60px;
+    top: 0;
+    right: 0;
+}
+
+/*For Settings*/
+
+.settings {
+    background-color: #fff;
+    border-radius: 7px;
+    box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+    max-width: 600px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.correct {
+    box-shadow: inset 0px 0px 100px #31ff4d;
+}
+
+.incorrect {
+    box-shadow: inset 0px 0px 100px #f1003c;
+}
+
+.block-diapason {
+    margin: 20px 0px;
+}
+
+
+
+/*Media query*/
+
+@media (max-width:700px) {
+    body {
+        font-size: 14px;
+    }
+
+    .quiz-box {
+        background-color: #fff;
+        border-radius: 7px;
+        box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+        width: 100vw;
+        margin-top: 15%;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .leave-page {
+        position: absolute;
+        width: 100vw;
+        height: 45px;
+    }
+
+    .quiz-header {
+        padding: 30px;
+        max-height: 70vh;
+    }
+
+    .correct {
+        box-shadow: inset 0px 0px 20px #31ff4d;
+    }
+
+    .incorrect {
+        box-shadow: inset 0px 0px 20px #f1003c;
+    }
+}
+
+@media (max-width:450px) {
+    body {
+        font-size: 12px;
+    }
+
+    .quiz-box {
+        background-color: #fff;
+        border-radius: 7px;
+        box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+        width: 100vw;
+        margin-top: 30%;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .quiz-header {
+        padding: 10px;
+        max-height: 80vh;
+    }
+
+    .correct {
+        box-shadow: inset 0px 0px 20px #31ff4d;
+    }
+
+    .incorrect {
+        box-shadow: inset 0px 0px 20px #f1003c;
+    }
+}
+
+.error-msg {
+    color: red;
+}
+
+/* .question__button-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 3px;
+    margin-bottom: 3px;
+    top:50%;
+    left:0%;
+    width: 100%;
+}
+
+.question__button-btn {
+    background-color: white;
+    border-radius:5px;
+    width: 20%;
+    height: 50px;
+    border: 1px solid #dbdbdb;
+    box-shadow: 0px 3px 6px #292929;
+
+}
+.question__button-btn:hover {
+    border: 1px solid #dbdbdb;
+    cursor: pointer;
+    background-color: #5ec6eb;
+}
+.question__button-btn:active {
+    background-color: #438faa;
+} */
+
+
+.popup-areusure {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    /* display:none; */
+}
+
+.areusure {
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+}
+
+.popup-text {
+    font-size: 24px;
+    color: #000;
+    margin: 10px 0px;
+}
+
+small {
+    font-size: 14px;
+}
+
+.popup-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 7px;
+    border: 1px solid #444444
+}
+
+.popup-fuck {
+    display: none;
+}
