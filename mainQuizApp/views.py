@@ -41,7 +41,7 @@ def mytests_view(request):
     # files = UploadedFile.objects.filter(user=request.user)
     started_tests = Tests.objects.filter(user=request.user, is_finished=False).values('file__name', 'question_count',
                                                                                       'started_at', 'pk')
-    finished_tests = Tests.objects.filter(user=request.user, is_finished=True).values('file__name', 'question_count',
+    finished_tests = Tests.objects.filter(user=request.user, is_finished=True).order_by('-finished_at').values('file__name', 'question_count',
                                                                                       'finished_at', 'pk', 'result')
     files = UploadedFile.objects.filter(user=request.user).values('name', 'file_id', 'uploaded_at', 'questions_count',
                                                                   'pk')
