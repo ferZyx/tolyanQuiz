@@ -75,6 +75,7 @@ def upload_docx(request):
             return redirect('mytests')
         else:
             messages.error(request, 'Something was wrong. Talk with admin about it! Dont be shy, poops :3')
+            return redirect('mytests')
 
     # started_tests = Tests.objects.filter(user=request.user, is_finished=False).values('file__name', 'question_count',
     #                                                                                   'started_at', 'pk')
