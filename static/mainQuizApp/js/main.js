@@ -161,7 +161,7 @@ yes.addEventListener('click', () => {
         body: JSON.stringify(myAnswers)
     };
     console.log(myAnswers)
-    fetch('http://127.0.0.1:8000/finish_test/', options)
+    fetch('http://127.0.0.1:8000/finish_test/' || 'tolyanquiz.onrender.com/finish_test/' , options)
         .then(response => response.json())
         .then(data => {
     if ('redirect' in data) {
