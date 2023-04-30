@@ -6,10 +6,10 @@
 
 {% for question_dict in test_array %}
     {% if question_dict.user_answer == question_dict.correct_answer%}
-    <ul class="list-group" style="box-shadow: -10px 10px 20px rgba(79, 248, 88, 0.8);">
+    <ul class="list-group" style="box-shadow: -100px 1px 100px rgba(79, 248, 88, 0.8);">
     <li class="list-group-item list-group-item-action list-group-item-success">{{ question_dict.question|safe }}</li>
     {% else %}
-      <ul class="list-group" style="box-shadow: -5px 5px 10px rgba(236, 53, 53, 0.8);">
+      <ul class="list-group" style="box-shadow: -100px 0px 100px rgba(236, 53, 53, 0.8);">
       <li class="list-group-item list-group-item-action list-group-item-danger">{{ question_dict.question|safe }}</li>
     {% endif %}
 
