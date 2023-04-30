@@ -7,14 +7,14 @@
 {% for question_dict in test_array %}
     {% if question_dict.user_answer == question_dict.correct_answer%}
     <ul class="list-group" style="box-shadow: -100px 1px 100px rgba(79, 248, 88, 0.8);">
-    <li class="list-group-item list-group-item-action list-group-item-success">{{ question_dict.question|safe }}</li>
+    <li class="list-group-item list-group-item-action list-group-item-success ">{{ question_dict.question|safe }}</li>
     {% else %}
       <ul class="list-group" style="box-shadow: -100px 0px 100px rgba(236, 53, 53, 0.8);">
       <li class="list-group-item list-group-item-action list-group-item-danger">{{ question_dict.question|safe }}</li>
     {% endif %}
 
   {% if question_dict.correct_answer == "a" %}
-  <li class="list-group-item list-group-item-action list-group-item-success">{{ question_dict.answer1|safe }}</li>
+  <li class="list-group-item list-group-item-action list-group-item-success border border-success border-3">{{ question_dict.answer1|safe }}</li>
   {% else %}
   {% if question_dict.user_answer == "a" %}
     <li class="list-group-item list-group-item-action list-group-item-danger">{{ question_dict.answer1|safe }}</li>
@@ -24,7 +24,7 @@
   {% endif %}
 
   {% if question_dict.correct_answer == "b" %}
-  <li class="list-group-item list-group-item-action list-group-item-success">{{ question_dict.answer2|safe }}</li>
+  <li class="list-group-item list-group-item-action list-group-item-success border border-success border-3">{{ question_dict.answer2|safe }}</li>
   {% else %}
   {% if question_dict.user_answer == "b" %}
     <li class="list-group-item list-group-item-action list-group-item-danger">{{ question_dict.answer2|safe }}</li>
@@ -34,7 +34,7 @@
   {% endif %}
 
   {% if question_dict.correct_answer == "c" %}
-  <li class="list-group-item list-group-item-action list-group-item-success">{{ question_dict.answer3|safe }}</li>
+  <li class="list-group-item list-group-item-action list-group-item-success border border-success border-3">{{ question_dict.answer3|safe }}</li>
   {% else %}
   {% if question_dict.user_answer == "c" %}
     <li class="list-group-item list-group-item-action list-group-item-danger">{{ question_dict.answer3|safe }}</li>
@@ -44,7 +44,7 @@
   {% endif %}
 
   {% if question_dict.correct_answer == "d" %}
-  <li class="list-group-item list-group-item-action list-group-item-success">{{ question_dict.answer4|safe }}</li>
+  <li class="list-group-item list-group-item-action list-group-item-success border border-success border-3">{{ question_dict.answer4|safe }}</li>
   {% else %}
   {% if question_dict.user_answer == "d" %}
     <li class="list-group-item list-group-item-action list-group-item-danger">{{ question_dict.answer4|safe }}</li>
@@ -54,7 +54,7 @@
   {% endif %}
 
   {% if question_dict.correct_answer == "e" %}
-  <li class="list-group-item list-group-item-action list-group-item-success">{{ question_dict.answer5|safe }}</li>
+  <li class="list-group-item list-group-item-action list-group-item-success border border-success border-3">{{ question_dict.answer5|safe }}</li>
   {% else %}
   {% if question_dict.user_answer == "e" %}
     <li class="list-group-item list-group-item-action list-group-item-danger">{{ question_dict.answer5|safe }}</li>
