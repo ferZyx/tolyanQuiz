@@ -16,7 +16,7 @@ class UploadedFileAdmin(admin.ModelAdmin):
     list_display_links = ('pk', 'user', 'name', 'uploaded_at', 'questions_count')
     search_fields = ('user__username', 'name',)
     list_filter = ('user',)
-    readonly_fields = ('user', 'uploaded_at', 'questions_count')
+    readonly_fields = ('uploaded_at', )
     fields = ('user', 'file_id', 'name', 'uploaded_at', 'questions_count')
 
 
