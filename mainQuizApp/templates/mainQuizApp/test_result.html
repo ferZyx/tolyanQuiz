@@ -3,7 +3,8 @@
 
 {% block content %}
 
-
+<h1 class="display-5 fw-bold">Вы набрали: {{result}} / {{question_count}} = {{ percent }}%</h1>
+<br>
 {% for question_dict in test_array %}
     {% if question_dict.user_answer == question_dict.correct_answer%}
     <ul class="list-group" style="box-shadow: -100px 1px 100px rgba(79, 248, 88, 0.8);">

@@ -48,7 +48,7 @@ def mytests_view(request):
                                                                   'pk')
     context_data = {'title': ' Мои тесты',
                     'started_tests': started_tests,
-                    'finished_tests': finished_tests,
+                    'finished_tests': finished_tests[:5],
                     'files': files,
                     }
     return render(request, 'mainQuizApp/mytests.html', context=context_data)
@@ -94,6 +94,7 @@ def test_config_view(request, file_pk):
     if request.method == 'POST':
         lower_diapason = int(request.POST['lower_diapason'])
         upper_diapason = int(request.POST['upper_diapason'])
+        question_count = int(request.POST['question_count'])
         if 'is_random' in request.POST:
             is_random = True
         else:
@@ -137,9 +138,11 @@ def test_config_view(request, file_pk):
                     question_dict_list.append(question_dict)
                     question = ''
                     answers_array = []
+
         question_dict_list = question_dict_list[lower_diapason:upper_diapason]
         if is_random:
             random.shuffle(question_dict_list)
+        question_dict_list = question_dict_list[:question_count]
 
         file = UploadedFile.objects.get(pk=file_pk)
         new_test = Tests(user=request.user, file=file, test_array=question_dict_list,
@@ -217,7 +220,10 @@ def test_result_view(request, test_pk):
         test = Tests.objects.get(pk=test_pk)
 
     context = {
-        'test_array': test.test_array
+        'test_array': test.test_array,
+        'question_count': test.question_count,
+        'result':test.result,
+        'percent': int(test.result/test.question_count * 100)
     }
 
     return render(request, 'mainQuizApp/test_result.html', context)
