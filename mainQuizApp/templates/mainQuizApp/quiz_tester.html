@@ -20,6 +20,7 @@
     }
 
 
+
     </style>
     <script>
   const quizData = [
@@ -37,73 +38,72 @@
   ];
 
 
+
     </script>
 </head>
 
 <body>
 <div class="popup-areusure popup-fuck">
-      <div class="popup-box">
+    <div class="popup-box">
         <div class="popup-text">
-          <h3>Ну что, завершаем?</h3>
-          <small
+            <h3>Ну что, завершаем?</h3>
+            <small
             >Советую хорошенько проверить на все ли вопросы ты ответил.. Попытка
-            всё-таки одна</small
-          >
+                всё-таки одна</small
+            >
         </div>
         <div class="areusure">
-          <button class="areusure-yes areusure-btn">
-            Да, я хочу покончить с этим :(
-          </button>
-          <button class="areusure-no areusure-btn">
-            Нет брат, я передумал(а)
-          </button>
+            <button class="areusure-yes areusure-btn">
+                Да, я хочу покончить с этим :(
+            </button>
+            <button class="areusure-no areusure-btn">
+                Нет брат, я передумал(а)
+            </button>
         </div>
-      </div>
     </div>
-    <div class="quiz-wrapper">
-      <div class="quiz-box" id="quiz">
+</div>
+<div class="quiz-wrapper">
+    <div class="quiz-box" id="quiz">
         <div class="quiz-header">
-          <div class="quiz-counter">
-            <span class="quiz-counter__current-question">0</span>/<span
-              class="quiz-counter__question-amount"
+            <div class="quiz-counter">
+                <span class="quiz-counter__current-question">0</span>/<span
+                    class="quiz-counter__question-amount"
             >
               0
             </span>
-          </div>
-          <h2 id="question">Question</h2>
-          <ul>
-            <li id="li1" class="li">
-              <input type="radio" name="answer" id="a" class="answer" />
-              <label for="a" id="a_text" class="text"> 1 </label>
-            </li>
-            <li id="li2" class="li">
-              <input type="radio" name="answer" id="b" class="answer" />
-              <label for="b" id="b_text" class="text">2 </label>
-            </li>
-            <li id="li3" class="li">
-              <input type="radio" name="answer" id="c" class="answer" />
-              <label for="c" id="c_text" class="text">3 </label>
-            </li>
-            <li id="li4" class="li">
-              <input type="radio" name="answer" id="d" class="answer" />
-              <label for="d" id="d_text" class="text">4 </label>
-            </li>
-            <li id="li5" class="li">
-              <input type="radio" name="answer" id="e" class="answer" />
-              <label for="e" id="e_text" class="text">5 </label>
-            </li>
-          </ul>
-          <div class="question-numlist">
-            <div class="shit"></div>
-            <button id="submit" class="good_btn">Завершить тест</button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </div>
+            <h2 id="question">Question</h2>
+            <ul>
+                <li id="li1" class="li">
+                    <input type="radio" name="answer" id="a" class="answer"/>
+                    <label for="a" id="a_text" class="text"> 1 </label>
+                </li>
+                <li id="li2" class="li">
+                    <input type="radio" name="answer" id="b" class="answer"/>
+                    <label for="b" id="b_text" class="text">2 </label>
+                </li>
+                <li id="li3" class="li">
+                    <input type="radio" name="answer" id="c" class="answer"/>
+                    <label for="c" id="c_text" class="text">3 </label>
+                </li>
+                <li id="li4" class="li">
+                    <input type="radio" name="answer" id="d" class="answer"/>
+                    <label for="d" id="d_text" class="text">4 </label>
+                </li>
+                <li id="li5" class="li">
+                    <input type="radio" name="answer" id="e" class="answer"/>
+                    <label for="e" id="e_text" class="text">5 </label>
+                </li>
+            </ul>
 
-    <button class="leave-page good_btn">Настройки</button>
+        </div>
+        <button id="mainBtn" class="leave-page good_btn">Ответить</button>
+
+    </div>
+</div>
+
 
 <script src="{% static 'mainQuizApp/js/keyboard_interface.js' %}"></script>
-<script src="{% static 'mainQuizApp/js/main.js' %}"></script>
+<script src="{% static 'mainQuizApp/js/old_main.js' %}"></script>
 </body>
 </html>
