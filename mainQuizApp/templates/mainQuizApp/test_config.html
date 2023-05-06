@@ -1,6 +1,29 @@
 {% extends 'mainQuizApp/base.html' %}
 {% block title %}{{title}}{% endblock %}
 {% block content %}
+
+<!-- Модальное окно с подтверждением удаления -->
+<div class="modal fade" id="confirm-delete-modal" tabindex="-1" role="dialog"
+     aria-labelledby="confirm-delete-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirm-delete-modal-title">Удаление документа</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Вы действительно хотите удалить этот документ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete-btn">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="p-5 mb-4 bg-light rounded-3">
     <div class="container-fluid py-5">
         <h1 class="display-5 fw-bold">Настройка тестирования</h1>
@@ -10,28 +33,74 @@
         <form method="post">
             {% csrf_token %}
 
-            <label for="lowerDiapason" class="form-label">lowerDiapason</label>
+            <label for="lowerDiapason" class="form-label">Нижняя граница диапазона</label>
             <input type="number" class="form-control" id="lowerDiapason" value="0" name="lower_diapason">
 
-            <label for="upperDiapason" class="form-label">upperDiapason</label>
+            <label for="upperDiapason" class="form-label">Верхняя граница диапазона</label>
             <input type="number" class="form-control" id="upperDiapason" value="{{ file.questions_count }}"
                    name="upper_diapason">
 
-            <label for="questionCount" class="form-label">questionCount</label>
+            <label for="questionCount" class="form-label">Количество вопросов</label>
             <input type="number" class="form-control" id="questionCount" value="25"
                    name="question_count">
 
             <input class="form-check-input" type="checkbox" value="" id="randomCheck" name="is_random">
             <label class="form-check-label" for="randomCheck">
-                Randomize questions
+                Перемешать вопросы
             </label>
             <br>
-            <button class="btn btn-primary btn-lg" type="submit">Start
+            <button class="btn btn-primary btn-lg me-2 mt-3" type="submit">Начать тестирование</button>
+            <button type="button" class="btn btn-danger btn-lg me-2 mt-3" data-toggle="modal"
+                    data-target="#confirm-delete-modal">Удалить документ
             </button>
 
         </form>
     </div>
 </div>
+
+<script>
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Имя куки совпадает с искомым именем
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+
+    const confirmBtn = document.getElementById("confirm-delete-btn");
+
+confirmBtn.onclick = function() {
+   file_id = {{ file.pk }}
+
+   const data = { file_id: file_id };
+
+  fetch('/delete_test/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCookie('csrftoken') // получаем csrf token из кук
+    },
+    body: JSON.stringify(data)
+}).then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      window.location.replace('/mytests/');
+    }
+  })
+  .catch(error => console.log(error));
+}
+
+</script>
+
 
 
 {% endblock %}

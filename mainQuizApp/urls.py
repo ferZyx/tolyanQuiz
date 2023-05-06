@@ -4,9 +4,8 @@ from django.urls import path
 from .views import *
 from django.conf.urls.static import static
 
-
 urlpatterns = [
-    path('admin/', admin.site.urls,),
+    path('admin/', admin.site.urls, ),
     path('', main_page, name='home'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
@@ -17,6 +16,6 @@ urlpatterns = [
     path('test_view/<test_pk>/', login_required(testing_view), name='test_view'),
     path('finish_test/', login_required(finish_test), name='test_view'),
     path('test_result_view/<test_pk>/', login_required(test_result_view), name='test_result_view'),
-
+    path('delete_test/', delete_test, name='delete_test'),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

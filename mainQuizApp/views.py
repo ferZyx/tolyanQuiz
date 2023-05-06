@@ -14,6 +14,8 @@ from bs4 import BeautifulSoup as BS
 from django.core.cache import cache
 from django.utils import timezone
 from django.urls import reverse
+from django.views.decorators.http import require_POST
+from django.shortcuts import get_object_or_404
 
 base_dir = settings.BASE_DIR
 abcde_array = ['a', 'b', 'c', 'd', 'e']
@@ -68,7 +70,7 @@ def upload_docx(request):
         file_id = upload_with_conversion(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx')
         questions_count = get_questions_count(file_id)
         if file_id and questions_count:
-            messages.success(request, 'Congratulations by brother! Uploaded successful!!!')
+            messages.success(request, 'Congratulations my brother! Uploaded successful!!!')
             new_file = UploadedFile(user=request.user, file_id=file_id, name=file.name, questions_count=questions_count)
             new_file.save()
             os.remove(f'{base_dir}\\mainQuizApp\\temp\\{request.user.username}.docx')
@@ -160,6 +162,15 @@ def test_config_view(request, file_pk):
             'file': file,
         }
         return render(request, 'mainQuizApp/test_config.html', context)
+
+@require_POST
+def delete_test(request):
+    data = json.loads(request.body)
+    file_id = data.get('file_id')
+    print(file_id)
+    file = get_object_or_404(UploadedFile, id=file_id)
+    file.delete()
+    return JsonResponse({'success': True})
 
 
 def testing_view(request, test_pk):

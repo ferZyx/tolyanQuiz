@@ -20,9 +20,11 @@
             <p class="mb-1">Вопросов: {{ test.question_count }}</p>
             <small class="text-muted">And some muted small print.</small>
         </a>
-        {% endfor%}
+        {% endfor %}
     </div>
 </div>
+
+
 {% endif %}
 
 <div class="p-5 mb-4 bg-light rounded-3">
@@ -60,7 +62,8 @@
 {% if finished_tests %}
 <div class="p-5 mb-4 bg-light rounded-3">
     <h1 class="display-6 fw-bold">Последние завершенные тесты</h1>
-    <small>P.S. История тестов хранит в себе только последние 5 завершенных тестов ради экономии памяти в нашей драгоценной базе данных. </small>
+    <small>P.S. История тестов хранит в себе только последние 5 завершенных тестов ради экономии памяти в нашей
+        драгоценной базе данных. </small>
     <div class="list-group">
         {% for test in finished_tests %}
         <a href="{% url 'test_result_view' test.pk %}" class="list-group-item list-group-item-action">
@@ -76,6 +79,9 @@
                     var questionCount = {{ test.question_count }};
                     var percentage = (result / questionCount) * 100;
                     document.write(percentage.toFixed(1));
+
+
+
                 </script>
                 %
             </p>
