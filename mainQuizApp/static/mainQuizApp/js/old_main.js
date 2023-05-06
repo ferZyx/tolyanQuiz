@@ -11,45 +11,46 @@ const c_text = document.getElementById('c_text');
 const d_text = document.getElementById('d_text');
 const e_text = document.getElementById('e_text');
 
+let li_list = document.querySelectorAll(".li");
+
 const mainBtn = document.getElementById("mainBtn")
-
-let currentQuestion = 0
-
-let isAnswered = false
 
 let correct_li = undefined
 
-
 quizCounterQA.innerHTML = quizData.length
 
-function loadQuiz(currentQuestionID) {
-    const  currentQuizData = quizData[currentQuestionID];
-    questionElement.innerHTML = currentQuizData.question;
-    quizCounterCQ.innerHTML = currentQuestionID + 1
+let isAnswered = false
 
-    li_list.forEach(element => {
-        element.childNodes[1].checked = false
-    })
-    quiz.classList.remove('correct')
-    quiz.classList.remove('incorrect')
+let test_pk = window.location.pathname.split('/').slice(-2, -1)[0]
 
-    a_text.innerHTML = currentQuizData.a;
-    b_text.innerHTML = currentQuizData.b;
-    c_text.innerHTML = currentQuizData.c;
-    d_text.innerHTML = currentQuizData.d;
-    e_text.innerHTML = currentQuizData.e;
+// Получаем значение переменной currentQuestion из localStorage
+var currentQuestion = parseInt(localStorage.getItem(`currentQuestion${test_pk}`));
 
-
-    answer = myAnswers[currentQuestionID]
-    if (answer) {
-        document.querySelector("#" + answer).checked = true
-    }
-
-
+// Если значение currentQuestion не найдено в localStorage, устанавливаем его равным 0
+if (!currentQuestion) {
+  currentQuestion = 0;
 }
+console.log(currentQuestion)
 
-/*Это то что тебе нужно брат // */
-/*                          <=  */
+// Получаем значение переменной myAnswers из localStorage
+var myAnswers = localStorage.getItem(`myAnswers${test_pk}`);
+
+// Если значение myAnswers не найдено в localStorage, устанавливаем его по стандарту
+if (!myAnswers) {
+   myAnswers = {
+    csrfmiddlewaretoken: getCookie('csrftoken'), // Получение CSRF токена из cookies
+    test_pk: window.location.pathname.split('/').slice(-2, -1)[0],
+};
+}
+else{
+myAnswers = JSON.parse(myAnswers)
+}
+console.log(myAnswers)
+
+function pushAnswer(currentQuestionID, myAnswer) {
+    myAnswers[currentQuestionID] = myAnswer
+    localStorage.setItem(`myAnswers${test_pk}`, JSON.stringify(myAnswers));
+}
 
 // Получение CSRF токена из cookies
 function getCookie(name) {
@@ -68,38 +69,29 @@ function getCookie(name) {
     return cookieValue;
 }
 
-const myAnswers = {
-    csrfmiddlewaretoken: getCookie('csrftoken'), // Получение CSRF токена из cookies
-    test_pk: window.location.pathname.split('/').slice(-2, -1)[0],
-};
+function loadQuiz(currentQuestionID) {
+    const  currentQuizData = quizData[currentQuestionID];
+    questionElement.innerHTML = currentQuizData.question;
+    quizCounterCQ.innerHTML = currentQuestionID + 1
 
-function pushAnswer(currentQuestionID, myAnswer) {
-    myAnswers[currentQuestionID] = myAnswer
-}
-
-
-//Для выбора ответов
-let li_list = document.querySelectorAll(".li");
-li_list.forEach(element => {
-    element.addEventListener("click", (event) => {
-        if (!event.target.className) {
-            pushAnswer(currentQuestion, event.target.closest(".text").previousElementSibling.id)
-
-        }
-        if (event.target.className == "answer") {
-            pushAnswer(currentQuestion, event.target.id)
-
-        }
-        event.target.childNodes.forEach(element => {
-            if (element.className == "answer") {
-                event.target.childNodes[1].checked = true
-                pushAnswer(currentQuestion, event.target.childNodes[1].id)
-
-            }
-        })
-        // Боже мой сколько форычей, за то мне кажется я нашёл ошибку в мобильной версии тестов
+    li_list.forEach(element => {
+        element.childNodes[1].checked = false
     })
-})
+    quiz.classList.remove('correct')
+    quiz.classList.remove('incorrect')
+
+    a_text.innerHTML = currentQuizData.a;
+    b_text.innerHTML = currentQuizData.b;
+    c_text.innerHTML = currentQuizData.c;
+    d_text.innerHTML = currentQuizData.d;
+    e_text.innerHTML = currentQuizData.e;
+
+//    Это чтобы при загрузке н-ого вопроса отметить вариант который уже отвечали
+//    answer = myAnswers[currentQuestionID]
+//    if (answer) {
+//        document.querySelector("#" + answer).checked = true
+//    }
+}
 
 function stop_testing(){
     mainBtn.innerHTML = "Считаю результат, жди"
@@ -125,6 +117,7 @@ function stop_testing(){
 mainBtn.addEventListener("click", (event) => {
     if(isAnswered){
         currentQuestion += 1
+        localStorage.setItem(`currentQuestion${test_pk}`, currentQuestion);
 
         if (currentQuestion < quizData.length) {
             isAnswered = false
@@ -171,6 +164,27 @@ finish_btn.addEventListener("click", () => {
     stop_testing()
 })
 
+//Для выбора ответов
+li_list.forEach(element => {
+    element.addEventListener("click", (event) => {
+        if (!event.target.className) {
+            pushAnswer(currentQuestion, event.target.closest(".text").previousElementSibling.id)
+
+        }
+        if (event.target.className == "answer") {
+            pushAnswer(currentQuestion, event.target.id)
+
+        }
+        event.target.childNodes.forEach(element => {
+            if (element.className == "answer") {
+                event.target.childNodes[1].checked = true
+                pushAnswer(currentQuestion, event.target.childNodes[1].id)
+
+            }
+        })
+        // Боже мой сколько форычей, за то мне кажется я нашёл ошибку в мобильной версии тестов
+    })
+})
 
 
 loadQuiz(currentQuestion);
