@@ -3,6 +3,8 @@ const questionElement = document.getElementById('question');
 let quizCounterCQ = document.querySelector(".quiz-counter__current-question")
 let quizCounterQA = document.querySelector(".quiz-counter__question-amount")
 
+let finish_btn = document.querySelector("#finish_btn")
+
 const a_text = document.getElementById('a_text');
 const b_text = document.getElementById('b_text');
 const c_text = document.getElementById('c_text');
@@ -99,6 +101,27 @@ li_list.forEach(element => {
     })
 })
 
+function stop_testing(){
+    mainBtn.innerHTML = "Считаю результат, жди"
+    mainBtn.disabled = true;
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // Добавление CSRF токена в заголовок
+        },
+        body: JSON.stringify(myAnswers)
+    };
+    console.log(myAnswers)
+    fetch(window.location.origin + '/finish_test/'  , options)
+        .then(response => response.json())
+        .then(data => {
+            if ('redirect' in data) {
+                window.location.href = data.redirect;
+            }
+        });
+}
+
 mainBtn.addEventListener("click", (event) => {
     if(isAnswered){
         currentQuestion += 1
@@ -112,24 +135,7 @@ mainBtn.addEventListener("click", (event) => {
             loadQuiz(currentQuestion)
         }
         else {
-            mainBtn.innerHTML = "Считаю результат, жди"
-            mainBtn.disabled = true;
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken') // Добавление CSRF токена в заголовок
-                },
-                body: JSON.stringify(myAnswers)
-            };
-            console.log(myAnswers)
-            fetch(window.location.origin + '/finish_test/'  , options)
-                .then(response => response.json())
-                .then(data => {
-                    if ('redirect' in data) {
-                        window.location.href = data.redirect;
-                    }
-                });
+            stop_testing()
         }
     }
     else {
@@ -160,6 +166,10 @@ mainBtn.addEventListener("click", (event) => {
     }
 })
 
+
+finish_btn.addEventListener("click", () => {
+    stop_testing()
+})
 
 
 
