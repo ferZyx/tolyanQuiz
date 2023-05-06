@@ -44,6 +44,6 @@ class Tests(models.Model):
         return reverse('test-view', args=[str(self.pk)])
 
     class Meta:
-        ordering = ['started_at']
+        ordering = ['-started_at']
         verbose_name = 'Лог тестов'
         verbose_name_plural = 'Логи тестов'
