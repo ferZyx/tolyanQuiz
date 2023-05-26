@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ajx)5bdj8=7+u%s!mpm62ewx_=stqvo#*e75x!w)1qvlg0b6&u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tolyanquiz.onrender.com', 'example.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tolyanquiz.onrender.com', 'example.com','0.0.0.0']
 
 # Application definition
 
